@@ -7,16 +7,24 @@ if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
  
-$userid = mysqli_real_escape_string($link, $_REQUEST['username']);
-$pwd = mysqli_real_escape_string($link, $_REQUEST['password']);
- 
+$username = mysqli_real_escape_string($link, $_REQUEST["userid"]);
+$password = mysqli_real_escape_string($link, $_REQUEST["password"]);
+
 // attempt insert query execution
-$sql = "select userid,password from officials where userid='$userid' and password='$pwd'";
+$sql = "SELECT username,password FROM account WHERE username='".$username."' and password='".$password."'";
+
 $result = mysqli_query($link,$sql);
 
+$count = mysqli_num_rows($result);
+
+
+if($count !=0) {
          
          header("location: complaint.html");
-      
+      }else {
+         $error = "Your Login Name or Password is invalid";
+      }
+ 
  
 // close connection
 mysqli_close($link);
